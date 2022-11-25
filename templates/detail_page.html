@@ -9,6 +9,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/static/css/detail_page.css">
+    <link rel="stylesheet" href="/static/css/comment.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap">
     <title>Document</title>
 </head>
@@ -46,11 +47,22 @@
             </div>
             <hr>
             <hr>
-            <h1>"comment"</h1>
+            <h1 class="hhh">comment</h1>
+            <section id="content3">
+                <div id="noteFeed">
+                    <div id="noteCommentBox">
+                    <div class="feed-item">
+                        <textarea placeholder="댓글을 입력하세요" wrap="off" id="myNote"></textarea>
+                    </div>
+                    <button id="send">입력하기</button>
+                    </div>
+                </div>
+            </section>
         </div>
         </div>
     </div>
 </body>
     <!-- JS -->
     <script src="/static/js/detail_page.js"></script>
+    <script src="comment.js"></script>
 </html>
