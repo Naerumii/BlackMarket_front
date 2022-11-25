@@ -1,5 +1,49 @@
+const backend_base_url = "http://127.0.0.1:8000";  //포트번호 변경해주세요
+const frontend_base_url = "http://127.0.0.1:5500";  //포트번호 변경해주세요
 
+// 자동 함수 실행
+// 게시물 로드하기
+$(document).ready(async function loadArticles() {
+    articles = await getArticles();
+    console.log(articles);
+    const article_list = document.getElementById("article_container");
+  
+    articles.forEach((article) => {
+        console.log(article)
+        const newArticle = document.createElement("div");
+        newArticle.classList.add("slider__item");
+        newArticle.setAttribute("id", article.pk);
+        console.log(article.pk);
+        
+        const articleImage = document.createElement("img");
+        articleImage.classList.add("slider__image");
 
+        const bodyArticle = document.createElement("div");
+        bodyArticle.classList.add("slider__info");
+
+        const bodyTitle = document.createElement("h2");
+        const bodyPrice = document.createElement("h3");
+
+        const articleBtn = document.createElement("button");
+        articleBtn.classList.add("btn", "btn-outline-secondary");
+
+        articleBtn.innerText = "view";
+        articleBtn.setAttribute("type", "button");
+        articleBtn.setAttribute("onclick", "articleDetail(this.id)");
+
+        bodyPrice.innerText = article.price;
+        bodyTitle.innerText = article.title;
+
+        articleImage.setAttribute("src", `${backend_base_url}${article.image}`);
+
+        bodyArticle.appendChild(bodyTitle);
+        bodyArticle.appendChild(bodyPrice);
+        bodyArticle.appendChild(articleBtn);
+        newArticle.appendChild(articleImage);
+        newArticle.appendChild(bodyArticle)
+        article_list.appendChild(newArticle);
+    });
+});
 
 //게시글 생성
 async function createArticle() {
@@ -7,51 +51,39 @@ async function createArticle() {
     const parsed_payload = await JSON.parse(payload);
     console.log(parsed_payload);
 
-    content = document.getElementById("article_content").value;
-    title = document.getElementById("article_title").value;
-    restaurant = document.getElementById("article_restaurant").value;
-    image = document.getElementById("formFile").files[0];
-    console.log(image);
-    console.log(1)
+    title = document.getElementById("title").value;
+    price = document.getElementById("price").value;
+    content = document.getElementById("content").value;
+    image = document.getElementById("file-uploader").files[0];
+    console.log(title, price, content, image)
+
     const formData = new FormData();
-    console.log(2)
-    formData.append("post_title", title);
-    formData.append("post_restaurant", restaurant);
-    formData.append("post_content", content);
-    formData.append("post_image", image);
-    console.log(3)
+
+    formData.append("article_title", title);
+    formData.append("article_price", price);
+    formData.append("article_content", content);
+    formData.append("article_image", image);
+
+    console.log(formData.get("article_content"))
+
+    //테스트할 때 포트번호 변경
     const response = await fetch("http://127.0.0.1:8000/articles/", {
         headers: {
-        Authorization: "Bearer " + localStorage.getItem("access"),
+            Authorization: "Bearer " + localStorage.getItem("access"),
         },
         method: "POST",
         body: formData,
     });
-    console.log(5)
+
     if (response.status == 200) {
         alert("게시물 등록");
-        window.location.replace("http://127.0.0.1:5500/article_detail11.html");
+        window.location.replace("http://127.0.0.1:5500/templates/main.html");
+    } else {
+        alert(response.status)
     }
-  // if (response.status==200){
-  //     window.location.replace('http://127.0.0.1:8000/users/signup/');
-  // } else {
-  //     alert(response.status)
-  // }
 }
 
-//사용자 정보 보내기
-async function handleMock() {
-    const response = await fetch("http://127.0.0.1:8000/users/", {
-        headers: {
-        Authorization: "Bearer " + localStorage.getItem("access"),
-        },
-        method: "GET",
-    });
-    response_json = await response.json();
-    return response_json;
-}
-
-//게시물 가져오기
+//게시물 가져오기(전부)
 async function getArticles() {
     const response = await fetch("http://127.0.0.1:8000/articles/", {
         method: "GET",
@@ -60,151 +92,140 @@ async function getArticles() {
     return response_json;
 }
 
-//특정 게시물 가져오기
+//특정 게시물 가져오기(상세 페이지)
 function articleDetail(article_id) {
     console.log(article_id);
-    const url = `${frontend_base_url}/article_detail11.html?id=${article_id}`;
+    const url = `${frontend_base_url}/templates/detail_page.html?id=${article_id}`;
     location.href = url;
 }
 
-//추천가게 받아오기
-async function handleRecommend() {
-const response = await fetch("http://127.0.0.1:8000/recommends/", {
-    headers: {
-    Authorization: "Bearer " + localStorage.getItem("access"),
-    },
-    method: "GET",
-});
-response_json = await response.json();
-return response_json;
+//게시글 수정하기
+async function patchArticle(article_id, title, content, price) {
+    const articleData = {
+        title: title,
+        content: content,
+        price: price,
+    };
+    
+    const response = await fetch(`${backend_base_url}/articles/${article_id}`, {
+        headers: {
+            Authorization: localStorage.getItem("token"),
+        },
+        method: "PATCH",
+        body: JSON.stringify(articleData),
+    });
+    
+    if (response.status == 200) {
+        response_json = await response.json();
+        return response_json;
+    } else {
+        alert(response.status);
+    }
 }
 
-async function getArticleDetail(article_id) {
-const response = await fetch(`${backend_base_url}/articles/${article_id}`, {
-    method: "GET",
-});
-response_json = await response.json();
-console.log(response_json);
-// 받아온 값을 json화 시키고 콘솔로그 확인
-// getArticleDetail() 안에 article_id 써주고, article_detail.js에도 getArticleDetail(article_id);실행
-
-return response_json;
-}
-
-//게시글 수정
-async function patchArticle(article_id, title, content) {
-const articleData = {
-    title: title,
-    content: content,
-};
-
-const response = await fetch(`${backend_base_url}/articles/${article_id}`, {
-    headers: {
-    Authorization: localStorage.getItem("token"),
-    },
-    method: "PUT",
-    body: JSON.stringify(articleData),
-});
-
-if (response.status == 200) {
-    response_json = await response.json();
-    return response_json;
-} else {
-    alert(response.status);
-}
-}
-
+//게시글 삭제하기
 async function deleteArticle() {
-const response = await fetch(`${backend_base_url}/articles/${article_id}`, {
-    headers: {
-    Authorization: localStorage.getItem("token"),
-    },
-    method: "DELETE",
-});
-
-if (response.status == 200) {
-    window.location.replace(`${frontend_base_url}/`); // 삭제가 되고나면 인덱스로 다시 이동하게함
-} else {
-    alert(response.status);
-}
-}
-
-async function postComment(article_id, comment_content) {
-const commentData = {
-    content: comment_content,
-};
-const response = await fetch(
-    `${backend_base_url}/articles/${article_id}/comment`,
-    {
-    headers: {
-        Authorization: localStorage.getItem("token"),
-    },
-    method: "POST",
-    body: JSON.stringify(commentData),
+    const response = await fetch(`${backend_base_url}/articles/${article_id}`, {
+        headers: {
+            Authorization: localStorage.getItem("token"),
+        },
+        method: "DELETE",
+    });
+        
+    if (response.status == 200) {
+        window.location.replace(`${frontend_base_url}/`); // 삭제가 되고나면 인덱스로 다시 이동하게함
+    } else {
+        alert(response.status);
     }
-);
-
-if (response.status == 200) {
-    return response;
-} else {
-    alert(response.status);
-}
 }
 
-async function postLike(article_id) {
-const response = await fetch(
-    `${backend_base_url}/articles/${article_id}/like`,
-    {
-    headers: {
-        Authorization: localStorage.getItem("token"),
-    },
-    method: "POST",
-    }
-);
+// //사용자 정보 보내기
+// async function handleMock() {
+//     const response = await fetch("http://127.0.0.1:8000/users/", {
+//         headers: {
+//         Authorization: "Bearer " + localStorage.getItem("access"),
+//         },
+//         method: "GET",
+//     });
+//     response_json = await response.json();
+//     return response_json;
+// }
 
-if (response.status == 200) {
-    response_json = await response.json();
-    return response_json;
-} else {
-    alert(response.status);
-}
-}
+// async function postComment(article_id, comment_content) {
+// const commentData = {
+//     content: comment_content,
+// };
+// const response = await fetch(
+//     `${backend_base_url}/articles/${article_id}/comment`,
+//     {
+//     headers: {
+//         Authorization: localStorage.getItem("token"),
+//     },
+//     method: "POST",
+//     body: JSON.stringify(commentData),
+//     }
+// );
 
-async function deleteLike(article_id) {
-const response = await fetch(
-    `${backend_base_url}/articles/${article_id}/like`,
-    {
-    headers: {
-        Authorization: localStorage.getItem("token"),
-    },
-    method: "DELETE",
-    }
-);
+// if (response.status == 200) {
+//     return response;
+// } else {
+//     alert(response.status);
+// }
+// }
 
-if (response.status == 200) {
-    response_json = await response.json();
-    return response_json;
-} else {
-    alert(response.status);
-}
-}
+// async function postLike(article_id) {
+// const response = await fetch(
+//     `${backend_base_url}/articles/${article_id}/like`,
+//     {
+//     headers: {
+//         Authorization: localStorage.getItem("token"),
+//     },
+//     method: "POST",
+//     }
+// );
 
-async function getLike(article_id) {
-const response = await fetch(
-    `${backend_base_url}/articles/${article_id}/like`,
-    {
-    headers: {
-        Authorization: localStorage.getItem("token"),
-    },
-    method: "GET",
-    }
-);
+// if (response.status == 200) {
+//     response_json = await response.json();
+//     return response_json;
+// } else {
+//     alert(response.status);
+// }
+// }
 
-if (response.status == 200) {
-    response_json = await response.json();
-    return response_json;
-} else {
-    alert(response.status);
-}
-}
+// async function deleteLike(article_id) {
+// const response = await fetch(
+//     `${backend_base_url}/articles/${article_id}/like`,
+//     {
+//     headers: {
+//         Authorization: localStorage.getItem("token"),
+//     },
+//     method: "DELETE",
+//     }
+// );
 
+// if (response.status == 200) {
+//     response_json = await response.json();
+//     return response_json;
+// } else {
+//     alert(response.status);
+// }
+// }
+
+// async function getLike(article_id) {
+// const response = await fetch(
+//     `${backend_base_url}/articles/${article_id}/like`,
+//     {
+//     headers: {
+//         Authorization: localStorage.getItem("token"),
+//     },
+//     method: "GET",
+//     }
+// );
+
+// if (response.status == 200) {
+//     response_json = await response.json();
+//     return response_json;
+// } else {
+//     alert(response.status);
+// }
+// }

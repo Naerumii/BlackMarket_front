@@ -47,6 +47,8 @@
                 <li class="nav-link" id="menu-item"><a href="#presentation-container" class="menu-link"> Exhibit </a></li>
                 <li class="nav-link" id="menu-item"><a href="#main-media-container" class="menu-link"> NoticeBoard </a></li>
                 <li class="nav-link" id="menu-item"><a href="#prices-section-container" class="menu-link"> Media </a><li>
+                <li class="nav-link" id="menu-item"><a href="/templates/profile.html" class="menu-link"> Profile </a><li>
+                <li class="nav-link" id="menu-item" type="button" onclick="handleLogout()" class="menu-link"> Logout<li>
                 </ul>
             </nav>
         </div>
@@ -96,6 +98,7 @@
         aliquip ex ea commodo consequat.  </p>
 
         <!-- 구역나누기 해놓음 -->
+        <form>
         <div id="container">
             <!-- 1구역 : 변환 전 이미지 첨부 -->
             <div>
@@ -104,45 +107,25 @@
                     <div class="row">
                         <div class="col-12 col-md-6 mx-auto">
                             <div class="custom-file">
-                            <input type="file" class="custom-file-input" data-target="file-uploader" id="file-uploader">
+                            <input type="file" class="custom-file-input" onchange="readURL(this);" id="file-uploader">
                             </div>
                         </div>
                     </div>
                     <label class="text-center mb-5 image-preview-wrapper" for="file-uploader">
-                        <img src="https://via.placeholder.com/300x300/efefef?text=Avatar" alt="image-placehoder" class="img-thumbnail" data-target="image-preview">
+                        <img id="image-preview" />
                         <div class="spinner-wrapper position-absolute" data-target="spinner">
                             <div class="spinner-border text-secondary" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
                     </label>
-                    <div>
-                        <button type="button" class="btn btn-success">제작하기</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 2구역 : 변환 후 이미지 띄우기 -->
-            <div>
-                <div class="container p-5">
-                    <div class="inner-body">
-                        <h2 class="ffonon">변환 후 유화</h2>
-                        <!-- 클릭 전 보여지는 이미지 -->
-                        <a href="#img1" >
-                            <img src="https://picsum.photos/seed/9/500/300">
-                        </a>
-                        
-                        <!-- 확대해서 보여주는 이미지 -->
-                        <a href="#features-container" class="lightbox" id="img1">
-                            <span style="background-image: url('https://picsum.photos/seed/9/900/450')"></span>
-                        </a>
-                    </div>
                 </div>
             </div>
             <!-- 3구역 : 게시물 내용 입력 후 저장하기! -->
             <div>
                 <div class="container p-5">
                 <h2 class="ffonon">게시글 작성</h2>
-                    <p class="name">
+                          <p class="name">
                         <input name="title" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="제목" id="title" />
                     </p>
                     
@@ -151,17 +134,18 @@
                     </p>
                     
                     <p class="text">
-                        <textarea name="text" class="validate[required,length[6,300]] feedback-input" id="comment" placeholder="내용"></textarea>
+                        <textarea name="text" class="validate[required,length[6,300]] feedback-input" id="content" placeholder="내용"></textarea>
                     </p>
                     
                     
                     <div class="submit">
-                        <input type="button" value="SEND" id="button-blue"/>
+                        <input type="button" value="SEND" id="button-blue" onclick="createArticle()"/>
                     <div class="ease"></div>
                 </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 
 
@@ -181,35 +165,15 @@
         <div class="seeyou">
             <h1 class="title">Alpine slider</h1>
             <div class="slider" x-data="{start: true, end: false}">
-            <div class="slider__content" x-ref="slider" x-on:scroll.debounce="$refs.slider.scrollLeft == 0 ? start = true : start = false; Math.abs(($refs.slider.scrollWidth - $refs.slider.offsetWidth) - $refs.slider.scrollLeft) < 5 ? end = true : end = false;">
-                <div class="slider__item">
+            <div id="article_container" class="slider__content" x-ref="slider" x-on:scroll.debounce="$refs.slider.scrollLeft == 0 ? start = true : start = false; Math.abs(($refs.slider.scrollWidth - $refs.slider.offsetWidth) - $refs.slider.scrollLeft) < 5 ? end = true : end = false;">
+                
+                <!-- <div class="slider__item">
                     <img class="slider__image" src="https://images.unsplash.com/photo-1599422314077-f4dfdaa4cd09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODR8fGFic3RyYWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="Image">
                     <div class="slider__info">
                         <h2>This is a card</h2>
                         <button type="button" class="btn btn-outline-secondary" onclick="location.href='detail_page.html'">view</button>
                     </div>
-                </div>
-                <div class="slider__item">
-                    <img class="slider__image" src="https://images.unsplash.com/photo-1599422314077-f4dfdaa4cd09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODR8fGFic3RyYWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="Image">
-                    <div class="slider__info">
-                        <h2>This is a card</h2>
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='detail_page.html'">view</button>
-                    </div>
-                </div>
-                <div class="slider__item">
-                    <img class="slider__image" src="https://images.unsplash.com/photo-1599422314077-f4dfdaa4cd09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODR8fGFic3RyYWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="Image">
-                    <div class="slider__info">
-                        <h2>This is a card</h2>
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='detail_page.html'">view</button>
-                    </div>
-                </div>
-                <div class="slider__item">
-                    <img class="slider__image" src="https://images.unsplash.com/photo-1599422314077-f4dfdaa4cd09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODR8fGFic3RyYWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="Image">
-                    <div class="slider__info">
-                        <h2>This is a card</h2>
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='detail_page.html'">view</button>
-                    </div>
-                </div>
+                </div> -->
             </div>
             <div class="slider__nav">
             <button class="slider__nav__button" x-on:click="$refs.slider.scrollBy({left: $refs.slider.offsetWidth * -1, behavior: 'smooth'});" x-bind:class="start ? '' : 'slider__nav__button--active'">Previous</button>
@@ -334,8 +298,8 @@
     </footer>
 <!-- footer -->
 <!-- javascript -->
-    <script src="/static/js/article.js"></script>
     <script src="/static/js/main_f.js"></script>
+    <script src="/static/js/article.js"></script>
     <script src="/static/js/Exhibit.js"></script>
     <script src="/static/js/convert.js"></script>
 <!-- javascript -->
