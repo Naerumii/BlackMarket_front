@@ -182,7 +182,7 @@ Tags included:
     color: white;
 
     /* Background image */
-    background-image: url(범죄조직.png);
+    background-image: url(../img/범죄조직.png);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -1027,7 +1027,7 @@ footer p {
     color: white;
 
     /* Background image */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(범죄조직.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(../img/범죄조직.png);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -1440,7 +1440,7 @@ footer p {
     color: white;
 
     /* Background image */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(범죄조직.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(../img/범죄조직.png);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -1744,6 +1744,7 @@ footer p {
     margin-bottom: 50px;
     border: 3px solid rgb(255, 255, 255);
     display: flex;
+    
 }
 
 #container > div {
