@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- JS -->
-    <script src="detail_page.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="/static/css/detail_page.css">
@@ -20,49 +18,52 @@
     <div class = "card-wrapper">
         <div class = "card">
         <!-- 카드 이미지 -->
-        <div class = "product-imgs">
-            <div class = "img-display">
-            <div class = "img-showcase">
-                <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"/>
+            <div class = "product-imgs">
+                <div class = "img-display">
+                    <div class = "img-showcase">
+                        <img id="image" />
+                    </div>
+                </div>
             </div>
-            </div>
-        </div>
         <!-- 카드 아래 -->
-        <div class = "product-content">
-            <h2 class = "product-title">title</h2>
+            <div class = "product-content">
+                <h2 id="title" class = "product-title"></h2>
             </div>
     
             <div class = "product-price">
-            <p class = "last-price">nickname</p>
-            <p class = "new-price">Price</p>
+                <p id="author" class = "last-price"></p>
+                <p id="price" class = "new-price"></p>
             </div>
     
             <div class = "product-detail">
-            <h2> Content </h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.<br>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.<br>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.<br>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
+                <h2> Content </h2>
+                <p id="content"></p>
+                <p id="time"></p>
             </div>
-            </div>
-            <hr>
-            <hr>
-            <h1 class="hhh">comment</h1>
-            <section id="content3">
-                <div id="noteFeed">
-                    <div id="noteCommentBox">
+
+            <button id="update_button" type="button" onclick="updateMode()">수정하기</button>
+            <button id="delete_button" type="button" onclick="removeArticle()">삭제하기</button>
+        </div>
+        <hr>
+        <hr>
+        <h1 class="hhh">comment</h1>
+        <section id="content3">
+            <div id="noteFeed">
+                <div id="noteCommentBox">
                     <div class="feed-item">
                         <textarea placeholder="댓글을 입력하세요" wrap="off" id="myNote"></textarea>
-                    </div>
-                    <button id="send">입력하기</button>
+                        <button id="send" type="button" onclick="writeComment()">
+                            댓글 등록
+                        </button>
                     </div>
                 </div>
-            </section>
-        </div>
-        </div>
+                <div id="comment_section">
+                </div>
+            </div>
+        </section>
     </div>
 </body>
     <!-- JS -->
     <script src="/static/js/detail_page.js"></script>
-    <script src="comment.js"></script>
+    <script src="/static/js/comment.js"></script>
 </html>

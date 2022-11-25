@@ -12,7 +12,6 @@ $(document).ready(async function loadArticles() {
         console.log(article)
         const newArticle = document.createElement("div");
         newArticle.classList.add("slider__item");
-        newArticle.setAttribute("id", article.pk);
         console.log(article.pk);
         
         const articleImage = document.createElement("img");
@@ -29,6 +28,7 @@ $(document).ready(async function loadArticles() {
 
         articleBtn.innerText = "view";
         articleBtn.setAttribute("type", "button");
+        articleBtn.setAttribute("id", article.pk);
         articleBtn.setAttribute("onclick", "articleDetail(this.id)");
 
         bodyPrice.innerText = article.price;
@@ -99,6 +99,7 @@ function articleDetail(article_id) {
     location.href = url;
 }
 
+
 //게시글 수정하기
 async function patchArticle(article_id, title, content, price) {
     const articleData = {
@@ -138,3 +139,4 @@ async function deleteArticle() {
         alert(response.status);
     }
 }
+
