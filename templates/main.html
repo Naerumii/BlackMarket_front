@@ -166,14 +166,6 @@
             <h1 class="title">Alpine slider</h1>
             <div class="slider" x-data="{start: true, end: false}">
             <div id="article_container" class="slider__content" x-ref="slider" x-on:scroll.debounce="$refs.slider.scrollLeft == 0 ? start = true : start = false; Math.abs(($refs.slider.scrollWidth - $refs.slider.offsetWidth) - $refs.slider.scrollLeft) < 5 ? end = true : end = false;">
-                
-                <!-- <div class="slider__item">
-                    <img class="slider__image" src="https://images.unsplash.com/photo-1599422314077-f4dfdaa4cd09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODR8fGFic3RyYWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="Image">
-                    <div class="slider__info">
-                        <h2>This is a card</h2>
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='detail_page.html'">view</button>
-                    </div>
-                </div> -->
             </div>
             <div class="slider__nav">
             <button class="slider__nav__button" x-on:click="$refs.slider.scrollBy({left: $refs.slider.offsetWidth * -1, behavior: 'smooth'});" x-bind:class="start ? '' : 'slider__nav__button--active'">Previous</button>

@@ -65,27 +65,32 @@ function updateMode() {
   
     const input_title = document.createElement("textarea"); // 수정할 수 있는 입력창만들기
     input_title.setAttribute("id", "input_title");
-    input_title.innerText = title.innerHTML; // 안하면 공란처리됨
+    input_title.classList.add("input_title_style"); // title 수정 입력창의 class -> detail.page.css에서 꾸미면 됨
+    input_title.innerText = title.innerHTML; // 원래 있던 값 일단 보여주기, 안하면 공란처리됨
   
     const input_content = document.createElement("textarea"); // 수정할 수 있는 입력창만들기 title,content 둘다 해줘야함. 안그러면 안생김
     input_content.setAttribute("id", "input_content");
+    input_content.classList.add("input_content_style"); // content 수정 입력창의 class -> detail.page.css에서 꾸미면 됨
     input_content.innerText = content.innerHTML; // 안하면 공란처리됨
     input_content.rows = 3;
 
     const input_price = document.createElement("textarea"); // 수정할 수 있는 입력창만들기
     input_price.setAttribute("id", "input_price");
+    input_price.classList.add("input_price_style"); // price 수정 입력창의 class -> detail.page.css에서 꾸미면 됨
     input_price.innerText = price.innerHTML; // 안하면 공란처리됨
   
-    const body = document.getElementById("body_cont");;
-    body.insertBefore(input_title, title);
-    body.insertBefore(input_content, content);
-    body.insertBefore(input_price, price);
+    const body1 = document.getElementById("container1");
+    const body2 = document.getElementById("container2");
+    const body3 = document.getElementById("container3");
+    body1.insertBefore(input_title, title); //기존 부분을 입력란으로 교체
+    body3.insertBefore(input_content, content);
+    body2.insertBefore(input_price, price);
   
     const update_button = document.getElementById("update_button"); //업데이트 버튼 요소 가져오기
     update_button.setAttribute("onclick", "updateArticle()");  //클릭시 updateArticle 함수 실행
 }
 
-// 게시글 수정한 내용을 back에 보내는 함수
+// 게시글 수정한 내용을 다시 front에 붙여주는 함수
 async function updateArticle() {
     let input_title = document.getElementById("input_title");
     let input_content = document.getElementById("input_content");
@@ -101,19 +106,63 @@ async function updateArticle() {
   
     input_title.remove();
     input_content.remove(); // 수정하기 눌러서 기존 내용없애주기.
+    input_price.remove();
   
     const title = document.getElementById("title"); // 35.36코드에 title.style.visibility = "hidden" 없애놨으니까
     const content = document.getElementById("content"); // 불러서
+    const price = document.getElementById("price");
     title.style.visibility = "visible"; // 다시 보이게 !
     content.style.visibility = "visible";
+    price.style.visibility = "visible";
   
     update_button.setAttribute("onclick", "updateMode()"); // 다시 클릭하면 위의 코드 38 부분이 실행됨
   
     loadDetailArticles(article_id); // 다시 한 번. 맨 위의 함수 실행
   }
 
-  async function removeArticle() {
-    await deleteArticle(article_id);
-  }
+//게시글 수정 내용 back에 보내 저장하는 메서드
+async function patchArticle(article_id, title, content, price) {
+  const articleData = {
+    title: title,
+    content: content,
+    price: price,
+  };
+  console.log(article_id);
+  const response = await fetch(`${backend_base_url}/articles/${article_id}/`, {
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("access"),
+    },
+    method: "PATCH",
+    body: JSON.stringify(articleData),
+  });
 
-  loadDetailArticles(article_id);
+  if (response.status == 200) {
+    response_json = await response.json();
+    return response_json;
+  } else {
+    alert(response.status);
+  }
+}
+
+// 게시글 삭제 버튼 클릭 시 실행되는 함수
+async function removeArticle() {
+  await deleteArticle(article_id);
+}
+
+async function deleteArticle() {
+  const response = await fetch(`${backend_base_url}/articles/${article_id}/`, {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("access"),
+    },
+    method: "DELETE",
+  });
+
+  if (response.status == 204) {
+    window.location.replace(`${frontend_base_url}/templates/main.html`); // 삭제가 되고나면 인덱스로 다시 이동하게함
+  } else {
+    alert(response.status);
+  }
+}
+
+loadDetailArticles(article_id);
