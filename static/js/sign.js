@@ -78,5 +78,5 @@ async function handleLogout() {
     localStorage.removeItem("refresh");
     localStorage.removeItem("payload");
     alert("로그아웃 되었습니다");
-    location.reload();
+    window.location.replace("http://127.0.0.1:5500/templates/sign.html");
 }

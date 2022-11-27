@@ -13,7 +13,7 @@
 </head>
 <body>
     <!-- 뒤로가기 -->
-    <a class="close-button" href="#">Back</a>
+    <a class="close-button" href="/templates/main.html">Back</a>
 
     <div class = "card-wrapper">
         <div class = "card">
@@ -30,15 +30,16 @@
                 <h2 id="title" class = "product-title"></h2>
             </div>
         
-            <div id="container2" class = "product-price">
-                <p id="author" class = "last-price"></p>
-                <p id="price" class = "new-price"></p>
+            <div class = "product-price">
+                <p>작가: <span id="author" class = "last-price"></span></p>
+                <p id="container2">가격: <span id="price" class = "new-price"></span>₩</p>
             </div>
         
             <div id="container3" class = "product-detail">
                 <h2> Content </h2>
                 <p id="content"></p>
-                <p id="time"></p>
+                <p>게시글 수정일: <span id="time_updated"></span></p>
+                <p>게시글 생성일: <span id="time_created"></span></p>
             </div>
 
             <button id="update_button" type="button" onclick="updateMode()">수정하기</button>

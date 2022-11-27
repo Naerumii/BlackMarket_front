@@ -5,44 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- JS -->
-    <script src="detail_page.js"></script>
+    <script src="profile.js"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="/static/css/detail_page.css">
+    <link rel="stylesheet" href="/static/css/profile.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap">
     <title>Document</title>
 </head>
 <body>
-    <!-- 뒤로가기 -->
-    <a class="close-button" href="#">Back</a>
-
     <div class = "card-wrapper">
-        <div class = "card">
-        <!-- 카드 아래 -->
-        <div class = "product-content">
-            <h2 class = "product-title">title</h2>
+    <!-- 뒤로가기 -->
+    <a class="close-button" href="/templates/main.html">Back</a>
+    <header>
+        <div class="container">
+            <div class="profile">
+                <div id="image" class="profile-image">
+                </div>
+                <div class="profile-user-settings">
+                    <h1 id="nickname" class="profile-user-name"></h1>
+                    <button class="btn profile-edit-btn" onClick="location.href='profile_update.html'">프로필 수정</button>
+                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                </div>
+                <div class="profile-bio">
+                    <p><span id="introduce" class="profile-real-name"></span></p>
+                </div>
+
             </div>
-    
-            <div class = "product-price">
-            <p class = "last-price">nickname</p>
-            <p class = "new-price">Price</p>
-            </div>
-    
-            <div class = "product-detail">
-            <h2> Content </h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.<br>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.<br>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.<br>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
-            </div>
-            </div>
-            <hr>
-            <hr>
-            <h1>"comment"</h1>
+            <!-- End of profile section -->
+
         </div>
+        <!-- End of container -->
+
+    </header>
+
+    <main>
+
+        <div class="container">
+
+            <div id="gallery_container" class="gallery">
+                
+            </div>
+            <!-- End of gallery -->
+
         </div>
+        <!-- End of container -->
+    </main>
+
+
     </div>
+    <!-- End of card-wrapper -->>
 </body>
-    <!-- JS -->
-    <script src="/static/js/detail_page.js"></script>
+<!-- JS -->
+<script src="/static/js/profile.js"></script>
 </html>

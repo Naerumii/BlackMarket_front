@@ -31,7 +31,7 @@ $(document).ready(async function loadArticles() {
         articleBtn.setAttribute("id", article.pk);
         articleBtn.setAttribute("onclick", "articleDetail(this.id)");
 
-        bodyPrice.innerText = article.price;
+        bodyPrice.innerText = article.price+"₩";
         bodyTitle.innerText = article.title;
 
         articleImage.setAttribute("src", `${backend_base_url}${article.image}`);
@@ -96,6 +96,18 @@ async function getArticles() {
 function articleDetail(article_id) {
     console.log(article_id);
     const url = `${frontend_base_url}/templates/detail_page.html?id=${article_id}`;
+    location.href = url;
+}
+
+//특정 유저 정보 가져오기(프로필 페이지)
+function profileDetail() {
+    const payload = localStorage.getItem("payload");
+    const parsed_payload = JSON.parse(payload)
+    console.log(parsed_payload)
+
+    user_id = parsed_payload.user_id
+    console.log(user_id);
+    const url = `${frontend_base_url}/templates/profile.html?id=${user_id}`;
     location.href = url;
 }
 

@@ -94,6 +94,14 @@
     line-height: 1.1;
     font-weight: 300;
     font-size: 1.75rem;
+    margin-bottom: 10px;
+}
+.slider__info h3 {
+    color: red;
+    font-family: system-ui;
+    line-height: 1.1;
+    font-weight: 400;
+    font-size: 1.75rem;
     margin: 0;
 }
 .slider__nav {

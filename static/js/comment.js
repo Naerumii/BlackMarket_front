@@ -31,8 +31,6 @@ async function writeComment() {
   myNote.value = "";
 }
 
-loadDetailArticles(article_id);
-
 // 댓글 작성 //
 async function postComment(article_id, myNote) {
   const commentData = {

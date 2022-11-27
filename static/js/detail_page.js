@@ -27,14 +27,16 @@ async function loadDetailArticles(article_id) {
     const image = document.getElementById("image");
     const content = document.getElementById("content");
     const price = document.getElementById("price");
-    const time = document.getElementById("time");
+    const time_updated = document.getElementById("time_updated");
+    const time_created = document.getElementById("time_created");
   
     title.innerText = article.title;
     author.innerText = article.user;
     image.setAttribute("src", `${backend_base_url}${article.image}`);
     content.innerText = article.content;
     price.innerText = article.price;
-    time.innerText = article.created_at;
+    time_updated.innerText = article.updated_at;
+    time_created.innerText = article.created_at;
   
     const comment_section = document.getElementById("comment_section");
     comment_section.innerHTML = "";
