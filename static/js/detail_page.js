@@ -20,7 +20,7 @@ async function getArticleDetail(article_id) {
 // back에서 받아온 json 데이터 front에 내용 붙이는 함수
 async function loadDetailArticles(article_id) {
     article = await getArticleDetail(article_id);
-  
+
     //프론트엔드에서 태그 id 확인하기
     const title = document.getElementById("title");
     const author = document.getElementById("author");
@@ -40,18 +40,24 @@ async function loadDetailArticles(article_id) {
     comment_section.innerHTML = "";
   
     for (let i = 0; i < article.comment_set.length; i++) {
-      const old_comment = document.createElement("span");
-      const new_comment = document.createElement("p");
-      old_comment.innerText = article.comment_set[i].user;
-      new_comment.innerText = article.comment_set[i].content;
-      comment_section.appendChild(new_comment);
-      comment_section.appendChild(old_comment);
+      const comment_user = document.createElement("span");
+      const comment_content = document.createElement("p");
+      const comment_create = document.createElement("p");
+      const comment_delete = document.createElement("button");
+      comment_delete.classList.add("btn", "btn-outline-secondary");
+      comment_user.innerText = article.comment_set[i].user;
+      comment_content.innerText = article.comment_set[i].content;
+      comment_create.innerText = article.comment_set[i].created_at;
+      comment_delete.innerText = "삭제";
+      comment_section.appendChild(comment_content);
+      comment_section.appendChild(comment_user);
+      comment_section.appendChild(comment_create);
+      comment_section.appendChild(comment_delete);
+      comment_delete.setAttribute("type", "button");
+      comment_delete.setAttribute("id", `${article.comment_set[i].id}`)
+      comment_delete.setAttribute("onclick", "delete_comment(article_id, this.id)")
     }
-  
-    // const update_button = document.getElementById("update_button");
-    // const delete_button = document.getElementById("delete_button");
-    // update_button.style.visibility = "";
-    // delete_button.style.visibility = "";
+    
   }
 
 // 게시글 수정하기 버튼 클릭 시 동작하는 함수

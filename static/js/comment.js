@@ -23,7 +23,6 @@
 
 // document.addEventListener("DOMContentLoaded", initEvents);
 
-
 ////////////댓글작성///////////////////////////////////////////////////////
 async function writeComment() {
   const myNote = document.getElementById("myNote");
@@ -58,20 +57,24 @@ async function postComment(article_id, myNote) {
   }
 }
 
-
 // 댓글 삭제 //
-async function delete_comment(id) {
-    const response = await fetch(`${backend_base_url}article/comment/${id}`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': "Bearer " + localStorage.getItem("access")
-        },
-        method: 'DELETE'
-    })
-
-    if (response.status == 200) {
-        window.location.reload();
-    } else {
-        alert("댓글 작성자만 삭제 가능합니다.")
+async function delete_comment(article_id, id) {
+  const response = await fetch(
+    `${backend_base_url}/articles/${article_id}/comment/${id}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access"),
+      },
+      method: "DELETE",
     }
+  );
+
+  if (response.status == 204) {
+    window.location.reload(
+      `${frontend_base_url}/templates/detail_page.html?id=${article_id}`
+    );
+  } else {
+    alert("댓글 작성자만 삭제 가능합니다.");
+  }
 }
